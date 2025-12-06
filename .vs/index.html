@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday, Mom</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Open+Sans:wght@300;400;600&display=swap");
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+    font-family: "Open Sans", system-ui, sans-serif;
+    min-height: 100vh;
+    background: #ffc6e9; /* soft pink */
+    color: #fff;
+    }
+
+    .card {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow: hidden;
+    }
+
+    /* Blurred photo background */
+    .card::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("background.jpg") center/cover no-repeat;
+      filter: blur(3px) brightness(0.45);
+      z-index: -2;
+    }
+
+    /* Light gradient overlay */
+    .card::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.2), transparent 60%),
+        linear-gradient(120deg, rgba(255, 192, 203, 0.7), rgba(255, 105, 180, 0.4));
+    mix-blend-mode: screen;
+    opacity: 0.9;
+    z-index: -1;
+    }
+
+    .card-content {
+      position: relative;
+      text-align: center;
+      padding: 20px 18px 28px;
+      max-width: 480px;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(12px);
+    }
+
+    @media (min-width: 600px) {
+      .card-content {
+        padding: 32px 28px 36px;
+      }
+    }
+
+    .mom-photo {
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+      margin-bottom: 16px;
+      animation: float-soft 4s ease-in-out infinite;
+    }
+
+    .title {
+      font-family: "Pacifico", cursive;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 16px;
+    }
+
+    .message {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    #surpriseBtn {
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #2b1225;
+      /* background: linear-gradient(135deg, #ffd04d, #ff7eb3); */
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    #surpriseBtn:active {
+      transform: translateY(1px) scale(0.97);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      filter: brightness(0.95);
+    }
+
+    /* Hidden area with extra message + cakes */
+    .extra {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition:
+        max-height 0.6s ease,
+        opacity 0.6s ease,
+        margin-top 0.6s ease;
+      margin-top: 0;
+    }
+
+    .card-content.open .extra {
+      max-height: 500px;
+      opacity: 1;
+      margin-top: 20px;
+    }
+
+    .extra-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .extra-text {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    /* Cakes row */
+    .cakes {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .cake {
+      width: 54px;
+      height: 54px;
+      background: url("./Ammas\ Bdayy/img folder/cake.jpg") center/contain no-repeat;
+      animation: float-soft 3.2s ease-in-out infinite;
+    
+    }
+
+    .cake:nth-child(2) {
+      animation-delay: 0.6s;
+    }
+
+    .cake:nth-child(3) {
+      animation-delay: 1.1s;
+    }
+
+    /* Floating balloons */
+    .balloon {
+      position: absolute;
+      width: 50px;
+      height: 70px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff, rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, #a6d8ff, #d4f1ff);
+      opacity: 0.9;
+      animation: float-up 5s linear infinite;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      width: 4px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.7);
+      left: 50%;
+      top: 70px;
+      transform: translateX(-50%);
+    }
+
+    /* .balloon.b1 {
+      left: 8%;
+      bottom: -120px;
+      animation-delay: 0s;
+    } */
+
+       .balloon.b4 {
+      left: 5%;
+      bottom: -140px;
+      animation-delay: 2s;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff, rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, #0689cf, #e1f5ff); /* another soft blue */
+    }
+
+        .balloon.b3 {
+      left: 10%;
+      bottom: -140px;
+      animation-delay: 3s;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff, rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, #0689cf, #e1f5ff); /* another soft blue */
+    }
+
+
+            .balloon.b7 {
+      left: 20%;
+      bottom: -140px;
+      animation-delay: 4s;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff, rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, #0689cf, #e1f5ff); /* another soft blue */
+    }
+
+
+    .balloon.b2 {
+      left: 75%;
+      bottom: -130px;
+      animation-delay: 3s;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff, rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, #0689cf, #e1f5ff); /* another soft blue */
+    }
+
+        .balloon.b5 {
+      left: 85%;
+      bottom: -130px;
+      animation-delay: 2s;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff, rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, #0689cf, #e1f5ff); /* another soft blue */
+    }
+
+        .balloon.b6 {
+      left: 95%;
+      bottom: -130px;
+      animation-delay: 1s;
+      background:
+        radial-gradient(circle at 30% 20%, #ffffff, rgba(255, 255, 255, 0)),
+        linear-gradient(145deg, #0689cf, #e1f5ff); /* another soft blue */
+    }
+
+
+
+  
+
+
+    /* Floating cake in background */
+    /* .bg-cake {
+      position: absolute;
+      right: -40px;
+      top: 65%;
+      width: 100px;
+      height: 100px;
+      background: url("./Ammas\ Bdayy/img folder/cake.jpg") center/contain no-repeat;
+      opacity: 0.4;
+      animation: float-soft 5s ease-in-out infinite;
+    } */
+
+    /* Animations */
+    @keyframes float-up {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.05);
+        opacity: 0;
+      }
+    }
+
+    @keyframes float-soft {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Small screens */
+    @media (max-width: 480px) {
+      .title {
+        font-size: 1.7rem;
+      }
+      .message,
+      .extra-text {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+  <div class="card">
+    <!-- Animated balloons -->
+    <div class="balloon b1"></div>
+    <div class="balloon b2"></div>
+    <div class="balloon b3"></div>
+    <div class="balloon b4"></div>
+    <div class="balloon b5"></div>
+    <div class="balloon b6"></div>
+    <div class="balloon b7"></div>
+    <div class="balloon b3"></div>
+    <!-- Background floating cake -->
+    <div class="bg-cake"></div>
+
+    <div class="card-content" id="cardContent">
+      <!-- Your mom's photo -->
+      <img src="./Ammas Bdayy/img folder/collage.jpg" alt="Mom" class="mom-photo" />
+
+      <!-- <div class="subtitle">Today is your day</div> -->
+      <h1 class="title">Happy Birthday, Amma</h1>
+
+      <p class="message">
+        To the most beautiful person I know both inside and out.
+        I made this little page just for you.
+      </p>
+
+      <button id="surpriseBtn">Tap for a surprise</button>
+
+      <div class="extra">
+        <div class="extra-title">A small message from me:</div>
+        <p class="extra-text">
+          Dear Amma, <br>
+          Thank you being my biggest strength throughout my life, for being the person I could turn to no matter what, for being a mother and a best-friend to me. Nobody could ever replace the love I have for you in my heart. Looking forward to many more years of listening to your wise advice, sharing laughs, and creating beautiful memories together. Wishing you an upcoming year filled with love, joy, and all the happiness you deserve. Happy Birthday Ammaa! <br><br>
+        </p>
+
+        <div class="extra-title">Have some virtual cake !!! </div>
+        <div class="cakes">
+          <div class="cake"></div>
+          <div class="cake"></div>
+          <div class="cake"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const btn = document.getElementById("surpriseBtn");
+    const cardContent = document.getElementById("cardContent");
+
+    btn.addEventListener("click", () => {
+      const isOpen = cardContent.classList.toggle("open");
+      btn.textContent = isOpen ? "Tap to hide the surprise" : "Tap for a surprise";
+    });
+  </script>
+</body>
+</html>
